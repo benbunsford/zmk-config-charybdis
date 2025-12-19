@@ -6,8 +6,26 @@
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/pointing.h>
 
+#include <dt-bindings/zmk/input_transform.h>
+#include <input/processors.dtsi>
+
 / {
     chosen { zmk,matrix_transform = &default_transform; };
+
+    trackball_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball>;
+
+        snipe_mode {
+            layers = <4>;
+            input-processors = <&zip_xy_scaler 1 16>; 
+        };
+
+        scroll_mode {
+            layers = <5>;
+            input-processors = <&zip_xy_to_scroll_mapper>;
+        };
+    };
 };
 
 &mt {
